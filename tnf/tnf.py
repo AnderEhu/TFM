@@ -7,6 +7,8 @@ from traceback import print_tb
 from utils import utils
 from temporal_formula import TemporalFormula
 from run_bica import prime_cover_via_BICA
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning) 
 
 class TNF:
     def __init__(self, formula):
