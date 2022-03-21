@@ -1,0 +1,1 @@
+(p_e & a1 & Xb) | (p_e & a2 & Xb) | (-a1 & G[1,1]b) | (-p_e & X-b) | (r_e & a1 & Xb) | (r_e & a2 & Xb) | (-a2 & G[1,1]b) | (-r_e & X-b) | (s_e & a1 & Xb) | (s_e & a2 & Xb) | (-s1 & G[1,1]b) | (-s_e & X-b) | (p_e & a1 & Xb) | (p_e & a7 & Xbb) | (-a12 & G[1,1]b) | (-l_e & X-b)

@@ -1,1 +1,1 @@
-(pe & a1 & Xb) | (pe & a2 & Xb) | (-a1 & XXc) | (-pe & X-b)
+(p_e & a1 & Xb) | (p_e & a2 & Xb) | (-a1 & XXc) | (-p_e & X-b)

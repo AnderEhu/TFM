@@ -1,0 +1,6 @@
+(p_e ∧ -a ∧ ((X(c)) v (X(e))))
+(-p_e ∧ -a ∧ (X(e)))
+(-p_e ∧ r_e ∧ a ∧ ((X(e)) v (X(d))))
+(-p_e ∧ a ∧ -r_e ∧ (X(e)))
+(p_e ∧ r_e ∧ a ∧ (((X(e)) v (X(b))) v (X(d))))
+(p_e ∧ a ∧ -r_e ∧ ((X(b)) v (X(e)))) 

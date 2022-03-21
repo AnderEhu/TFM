@@ -1,1 +1,1 @@
-(pe & a & Xb ) | (pe & a & XXc) |  (X-c)
+(p_e & a & Xb ) | (p_e & a & G[1,1]b & G[1,5](a & b)) |  (X-c)

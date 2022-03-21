@@ -1,0 +1,134 @@
+********************************************************************************
+Bica: a Boolean simplifier for non-clausal formulae
+---------------------------------------------------
+
+Bica is a Python prototype implementation of the formula simplification approach
+proposed in [3]. Given a Boolean formula in an arbitrary form, it is able to
+compute a smallest size prime cover of the formula, i.e. to construct a smallest
+CNF/DNF representation comprising the formula's prime implicates/implicants,
+which is equivalent to the original formula. Being inspired by the well-known
+Quine-McCluskey procedure, this entirely SAT-based approach can deal with
+arbitrary Boolean formulae whereas the Quine-McCluskey procedure can minimize
+only DNF formulae.
+
+Note that following [3], the problem is referred to as "formula minimization"
+for CNF/DNF input formulae and "formula simplification" for the general case of
+arbitrary non-clausal formulae. The word "Bica" is Portuguese and means
+extremely strong and high-quality coffee (a synonym of espresso).
+
+The list of references at the end of this README provides pointers to the
+descriptions of various algorithms and techniques used in Bica. Please cite [3]
+if you use Bica in your research work.
+
+The Bica implementation makes use of Primer [1] for prime compilation of input
+formulae, Forqes [2] and MSCG [4] for exact formula minimization. It can also
+use the known MUS extractors MUSer2 [5] and HHLMUC [6] for approximate formula
+minimization.
+
+
+********************************************************************************
+SETUP
+
+The provided binaries must be prepared (linked depending on the platform) before
+running Bica. For that, run
+
+./link-bin.py
+
+The binaries are available for platforms:
+ - Linux x86_64
+ - Mac OS X x86_64
+
+Requirements:
+ - Python 2.7 or above (compatible with Python 3)
+
+
+********************************************************************************
+USAGE
+
+bica.py -h -- display the list of available options.
+
+Some examples:
+
+1. report the "o NUM" line only:
+
+bica.py formula.cnf [formula-negated.cnf]
+
+2. for verbose output, use the "-v" option:
+
+bica.py -v formula.cnf [formula-negated.cnf]
+
+3. for reporting the solution in DIMACS CNF, use the "-vv" option:
+
+bica.py -vv formula.cnf [formula-negated.cnf]
+
+4. for computing a smallest DNF representation:
+
+bica.py -d -vv formula.cnf formula-negated.cnf
+
+
+Input files are supposed to be in CNF, which Tseitin-encodes the original
+Boolean formula and contains a line "c n orig vars NUM" (where NUM in the number
+of variables in the original formula). When needed (in case of non-clausal
+input or DNF output), the negated formula Tseitin-encoded to another CNF should
+be also provided.
+
+Smallest prime covers are reported in DIMACS CNF. In the case of DNF
+minimization (option "-d"), lines of the reported DIMACS CNF denote terms
+instead of clauses.
+
+
+********************************************************************************
+AUTHORS
+
+Bica:
+        Author(s): Alexey Ignatiev, Joao Marques-Silva
+        Contributor(s): Alessandro Previti
+
+Besides the Bica Python script itself, this distribution includes the following
+binaries.
+
+Forqes:
+        Author(s): Alexey Ignatiev, Joao Marques-Silva
+        Contributor(s): Alessandro Previti, Mark Liffiton
+
+MSCG:
+        Author(s): Alexey Ignatiev, António Morgado, Joao Marques-Silva
+
+Primer:
+        Author(s): Alessandro Previti, Joao Marques-Silva
+        Contributor(s): Alexey Ignatiev, António Morgado
+
+MUSer2:
+        Author(s): Anton Belov, Joao Marques-Silva
+        Contributor(s): Alessandro Previti
+
+HHLMUC:
+        Author(s): Vadim Ryvchin
+
+Please contact Alexey Ignatiev (aign@sat.inesc-id.pt) in case of bugs or
+questions.
+
+
+********************************************************************************
+REFERENCES
+
+[1] A. Previti, A. Ignatiev, A. Morgado, and J. Marques-Silva (2015) Prime
+    Compilation of Non-Clausal Formulae. In: Proc. IJCAI 2015, pp. 1980-1988.
+
+[2] A. Ignatiev, A. Previti, M. Liffiton, and J. Marques-Silva (2015) Smallest
+    MUS Extraction with Minimal Hitting Set Dualization. In: Proc. CP 2015,
+    pp. 173-182.
+
+[3] A. Ignatiev, A. Previti, and J. Marques-Silva (2015) SAT-Based Formula
+    Simplification. In: Proc. SAT 2015, pp. 287-298.
+
+[4] A. Morgado, A. Ignatiev, and J. Marques-Silva (2015) MSCG: Robust
+    Core-Guided MaxSAT Solving. In: Journal on Satisfiability, Boolean Modeling
+    and Computation 9.
+
+[5] A. Belov and J. Marques-Silva (2012) MUSer2: An Efficient MUS Extractor,
+    System Description, Journal on Satisfiability, Boolean Modeling
+    and Computation 8, 2012, pp. 123-128.
+
+[6] Vadim Ryvchin, Ofer Strichman (2011) Faster Extraction of High-Level Minimal
+    Unsatisfiable Cores. In: Proc. SAT 2011, pp. 174-187

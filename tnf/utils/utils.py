@@ -1,3 +1,6 @@
+from temporal_formula import TemporalFormula
+from z3 import *
+
 def get_neg_literal(literal):
     first_char = literal[0]
     if first_char in ['-', '!']:
@@ -195,3 +198,108 @@ def print_bica(formula):
         else:
             formulaStr += " v " +l
     return formulaStr
+
+
+
+def getStrToList(formulaStr):
+    return TemporalFormula(formulaStr).ab
+
+def get_literals(formula):
+        if isinstance(formula, str):
+            return {formula}
+        elif len(formula) == 2:
+            return get_literals(formula[1])
+        else:
+            res1 = get_literals(formula[1])
+            res2 = get_literals(formula[2])
+            return res1 | res2  
+
+def is_temp_op(op):
+    return (op == "X") or ("F" in op) or ("G" in op)
+
+def delete_temp_ops(formula):
+    if is_temp_op(formula[0]):
+            return delete_temp_ops(formula[1])
+    else:
+        return formula
+
+def to_z3(formula):
+    if isinstance(formula, str):
+        if is_true(formula):
+            return True
+        elif is_false(formula):
+            return False
+        elif formula[0] == "-":
+            return Not(Bool(formula[1:]))
+        else:
+            return Bool(formula)
+    elif isinstance(formula, list) and len(formula) == 1:
+        return to_z3(formula[0])
+    elif len(formula) == 2:
+        if is_neg(formula[0]):
+            subformula = to_z3(formula[1])
+            return Not(subformula)
+        elif is_eventually(formula[0]) or is_always(formula[0]) : #Corregir
+            return Bool(to_str(formula))
+        else: #Next
+            subformula = to_z3(formula[1])
+            strFormula =to_str(formula)
+            if has_neg(strFormula):
+                strFormulaSinNeg = delete_neg_str(strFormula)
+                return Not(Bool(strFormulaSinNeg))
+            else:
+                return Bool(strFormula)
+
+    elif formula[0] == "->":
+        leftFormula = to_z3(formula[1])
+        rightFormula = to_z3(formula[2])
+        return Implies(leftFormula, rightFormula)
+
+    else:
+        subFormulasZ3 = list()
+        for subformula in formula[1:]:
+            subFormulasZ3.append(to_z3(subformula))
+        if is_or(formula[0]): 
+            return Or(subFormulasZ3)
+        if is_and(formula[0]):
+            return And(subFormulasZ3)
+
+
+def get_temporal_limits(formula):
+    limitInf = ""
+    limitSup = ""
+    start = False
+    end = False
+    cNext = count_next(formula)
+    if is_atom(formula) or (formula[0] == "-" and is_atom(formula[1])):
+        return int(0), int(0)
+    if cNext > 0:
+        return int(cNext), int(cNext)
+    for f in formula[0]:
+
+        if f == ",":
+            start = False
+            end = True
+        elif f == "]":
+            break
+        elif f == "[":
+            start = True
+        elif start:
+            limitInf = limitInf + f
+        elif end: 
+            limitSup = limitSup + f
+        else: 
+            continue
+    return int(limitInf), int(limitSup)
+     
+
+def is_in_interval_success(phiAb, alphaAb):
+    n, m = get_temporal_limits(alphaAb)
+    nprima, mprima = get_temporal_limits(phiAb)
+    if not is_always(phiAb[0]):
+        if not is_always(alphaAb[0]):
+            return (nprima >= n and nprima <= m) and (mprima >= n and mprima <= m)
+        else:
+            return n == m and mprima == nprima and n == nprima
+    else:
+       return (n >= nprima and nprima <= m) and (n <= mprima and mprima >= m)
