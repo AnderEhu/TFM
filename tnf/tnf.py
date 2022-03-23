@@ -1,20 +1,17 @@
 
-from ast import parse
-from asyncio import futures
 import copy
-from ctypes import util
-from hashlib import new
 import itertools
-from operator import index
+from os import remove
 import sys
 import time
 from z3 import *
 
-from numpy import copyto
 from utils import utils
 from temporal_formula import TemporalFormula
 from run_bica import prime_cover_via_BICA
 from collections import deque
+from tools import MiniSAT
+from circuit import Circuit
 
 class TNF:
     def __init__(self, formula, env_vars, subsumptions):
@@ -25,10 +22,6 @@ class TNF:
         self.short_tnf_res = self.short_tnf()
         self.short_tnfStr = print_separated_formula(self.short_tnf_res)
         print("\nShort TNF (", time.time() - start, "s) :\n", self.short_tnfStr, "")
-        start = time.time()
-        self.weakest_short_tnf = self.short_tnf(True)
-        self.weakest_short_tnfStr = print_separated_formula(self.weakest_short_tnf)
-        print("\nWeakest Short TNF (", time.time() - start, "s) :\n", self.weakest_short_tnfStr, "")
         start = time.time()
         self.tnfFormula = self.tnf()
         self.tnfStr = print_separated_formula(self.tnfFormula)
@@ -179,7 +172,7 @@ class TNF:
                 union_futures.remove(union_futures_i)
         union_futures.append(futures_i)
 
-    def short_tnf_step(self, env_var_assigment, short_tnf, weakest):
+    def short_tnf_step(self, env_var_assigment, short_tnf):
         literals_stack = deque()
         futures_stack = deque()
         index_stack = deque()
@@ -225,56 +218,38 @@ class TNF:
                 move_futures = futures_stack.popleft()
                 if self.not_visited(move_literals, skip) and move_futures != [{'XFalse'}]:
                     move = [move_literals, move_futures]
-                    self.insert_to_short_tnf(move, short_tnf, weakest)
+                    self.insert_to_short_tnf(move, short_tnf)
                     skip.append(move_literals)
 
 
-    def short_tnf(self, weakest = False):
+    def short_tnf(self):
         short_tnf = list()
         
         if not self.env_vars:
-            self.short_tnf_step(set(), short_tnf, weakest)
+            self.short_tnf_step(set(), short_tnf)
         for env_var in list(self.env_vars):
             
             not_env_var = utils.neg_literal(env_var)
-            self.short_tnf_step({env_var}, short_tnf, weakest)
-            self.short_tnf_step({not_env_var}, short_tnf, weakest)
+            self.short_tnf_step({env_var}, short_tnf)
+            self.short_tnf_step({not_env_var}, short_tnf)
 
         return short_tnf
 
-    def insert_to_short_tnf(self, new_move, short_tnf, weakest):
-        if weakest:
-            short_tnf_aux = copy.deepcopy(short_tnf)
-            for move in short_tnf_aux:
-                move_env = self.get_env_vars(move[0])
-                new_move_env = self.get_env_vars(new_move[0])
-                    
-                if move_env == new_move_env:
-                    if self.list_set_subsumtion(move, new_move):
-                        return
+    def insert_to_short_tnf(self, new_move, short_tnf):
 
-                    if self.list_set_subsumtion(new_move, move):
-                        short_tnf.remove(move)
-                
-                if move_env > new_move_env:
-                    if self.list_set_subsumtion(move, new_move):
-                        return
+        short_tnf_aux = copy.deepcopy(short_tnf)
+        for move in short_tnf_aux:
+            if move[0] == new_move[0] or move[0] > new_move[0] or move[0] < new_move[0]:
+                if self.has_weaker_futures(move, new_move):
+                    return
 
-                    if self.list_set_subsumtion(new_move, move):
-                        short_tnf.remove(move)
-
-
-                if move_env < new_move_env:
-                    if self.list_set_subsumtion(move, new_move):
-                        return
-
-                    if self.list_set_subsumtion(new_move, move):
-                        short_tnf.remove(move)
+                if self.has_weaker_futures(new_move, move):
+                    short_tnf.remove(move)
     
         short_tnf.append(new_move)
 
         
-    def list_set_subsumtion(self, move1, move2):
+    def has_weaker_futures(self, move1, move2):
         for future_2_i in move2[1]:
             subsumed = False
             for future_1_i in move1[1]:
@@ -356,7 +331,7 @@ def print_separated_formula(formula, AND = " ∧ ", OR = " v "):
                     res += "(" + literals_str + AND + futures_str + ")"
             else:
                 if literals_str ==  "":
-                    res += OR + futures_str
+                    res += OR + "(" + futures_str + ")"
                 elif futures_str == "":
                     res += OR + "(" + literals_str  + ")"
                 else:
@@ -422,8 +397,10 @@ def calculate_subsumptions(formula):
     return subsumptions
 
 def subsumes(future1, future2, subsumtions = None):
+    #future1 subsumes future2
     if subsumtions:
         return future2 in subsumtions[future1]
+
     if future1 == future2:
         return True
 
@@ -440,23 +417,18 @@ def subsumes(future1, future2, subsumtions = None):
 
     future2Literals = utils.get_literals(future2List)
 
-    if future1Literals >= future2Literals:
-
-
-            literal1WithOutTemp = utils.delete_temp_ops(future1List)
-            literal2WithOutTemp = utils.delete_temp_ops(future2List)
-            literal1WithOutTempZ3 = utils.to_z3(literal1WithOutTemp)
-            negliteral2WithOutTempZ3 =  utils.to_z3(['-', literal2WithOutTemp])
-            
-            #literal1List -> literal2List
+    if future1Literals >= future2Literals and utils.is_in_interval_success(future1List, future2List):
             if utils.is_in_interval_success(future1List, future2List):
-                s = Solver()
-                s.add(And(literal1WithOutTempZ3, negliteral2WithOutTempZ3)) 
-                if not (s.check() == sat):
+                literal1WithOutTemp = utils.delete_temp_ops(future1List)
+                literal2WithOutTemp = utils.delete_temp_ops(future2List)
+                f = ['&', literal1WithOutTemp, ['-', literal2WithOutTemp]]
+                C = Circuit()
+                C.list_to_circ(f)
+                C.write_in_DIMACS("pos.cnf", add_BICA_line=True)
+                if not (MiniSAT("pos.cnf") == "SAT"):
+                    remove("pos.cnf")
                     return True
                     
-
-
     return False
 
 def post_processing_bica_models(models, subsumtions):
