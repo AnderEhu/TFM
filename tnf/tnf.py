@@ -1,9 +1,12 @@
 
 import copy
+from doctest import SKIP
+from http.cookiejar import CookiePolicy
 import itertools
 from os import remove
 import sys
 import time
+from unittest import skip
 from z3 import *
 
 from utils import utils
@@ -21,13 +24,12 @@ class TNF:
         start = time.time()
         self.short_tnf_res = self.short_tnf()
         self.short_tnfStr = print_separated_formula(self.short_tnf_res)
-        print("\nShort TNF (", time.time() - start, "s) :\n", self.short_tnfStr, "")
+        print("\nShort TNF (", time.time() - start, "s)",len(self.short_tnf_res)," :\n", self.short_tnfStr, "")
         start = time.time()
         self.tnfFormula = self.tnf()
         self.tnfStr = print_separated_formula(self.tnfFormula)
-        print("\nTNF (", time.time() - start, "s) :\n", self.tnfStr, "")
+        print("\nTNF (", time.time() - start, "s)", len(self.tnfFormula),":\n", self.tnfStr, "")
         
-
 
     def __literals(self, separated_formula):
         return separated_formula[0]
@@ -155,9 +157,10 @@ class TNF:
         return formula
 
     def set_subsumption(self, set1, set2):
+        if not set1:
+            return False
         for future1 in set1:
             for future2 in set2:
-
                 if not (future2 in self.subsumptions[future1]):
                     return False
 
@@ -182,21 +185,20 @@ class TNF:
         index_stack.append(0)
 
         i = index_stack[0]
+
         skip = list()
 
         while index_stack:
             literals_i, futures_i = self.formula[i][0], self.formula[i][1]
             current_l = literals_stack[0]
             current_f = futures_stack[0]
-            diff_literals = current_l.symmetric_difference(literals_i)
             union_literals = current_l.union(literals_i)
-
+            diff_literals = current_l.symmetric_difference(literals_i)
             if self.is_consistent(diff_literals) and self.not_visited(union_literals, skip):
                 if union_literals != current_l:
                     literals_stack.appendleft(union_literals)
                     if current_f != [{'XFalse'}]:    
                         union_futures = copy.deepcopy(current_f)
-                        #union_futures.append(futures_i[0])
                         self.append_future(union_futures, futures_i[0])
                         futures_stack.appendleft(union_futures)
                     else:
@@ -224,11 +226,9 @@ class TNF:
 
     def short_tnf(self):
         short_tnf = list()
-        
         if not self.env_vars:
             self.short_tnf_step(set(), short_tnf)
         for env_var in list(self.env_vars):
-            
             not_env_var = utils.neg_literal(env_var)
             self.short_tnf_step({env_var}, short_tnf)
             self.short_tnf_step({not_env_var}, short_tnf)
@@ -236,7 +236,8 @@ class TNF:
         return short_tnf
 
     def insert_to_short_tnf(self, new_move, short_tnf):
-
+        if new_move in short_tnf:
+            return
         short_tnf_aux = copy.deepcopy(short_tnf)
         for move in short_tnf_aux:
             if move[0] == new_move[0] or move[0] > new_move[0] or move[0] < new_move[0]:
@@ -247,6 +248,7 @@ class TNF:
                     short_tnf.remove(move)
     
         short_tnf.append(new_move)
+
 
         
     def has_weaker_futures(self, move1, move2):
@@ -286,15 +288,11 @@ class TNF:
         return True
 
                 
-            
-            
-    
-
-
 
 
 
 def print_separated_formula(formula, AND = " ∧ ", OR = " v "):
+
         res = ""
         for fi in formula:
             literal_fi = fi[0]
@@ -321,7 +319,6 @@ def print_separated_formula(formula, AND = " ∧ ", OR = " v "):
             
             futures_str = "(" + futures_str + ")"
             
-            
             if res == "":
                 if literals_str ==  "":
                     res += futures_str
@@ -341,40 +338,55 @@ def print_separated_formula(formula, AND = " ∧ ", OR = " v "):
 
 def leer_fichero():
         if len(sys.argv) == 1:
-            path = "tnf/benchmarks/bench2"
+            path = "tnf/benchmarks/bench9"
         else:
             path = sys.argv[1]
         mode = 1
         if len(sys.argv) == 3:
             mode = sys.argv[2]
-        env_vars = set()
         with open(path, 'r') as f:
             parseFormulas = ['&', 'True']
+            formulasStr = "(True)"
             for formulaStr in f:
                 if formulaStr == "\n" or formulaStr=="":
                     continue
-                formulaStr = formulaStr.replace("\n", "").replace(" ", "")
-                formula = TemporalFormula(formulaStr)
-                formula_ab = formula.ab
-                env_vars = env_vars.union(formula.now_e)
-                parseFormulas.append(formula_ab)
+                formulaStr = "&("+formulaStr.replace("\n", "").replace(" ", "")+")"
+                formulasStr+=formulaStr
 
-            f.close()  
-            return parseFormulas, env_vars, mode
+            formula = TemporalFormula(formulasStr)
+            formula_ab = formula.ab
+            parseFormulas.append(formula_ab)
+
+        f.close()  
+        return parseFormulas, mode
 
 def ejecute():
-    parseFormulas, env_vars, mode = leer_fichero()
+    parseFormulas, mode = leer_fichero()
+    print(parseFormulas)
     start = time.time()
     models = prime_cover_via_BICA(parseFormulas)
-    print("\nDNF BICA (", time.time() - start, "s) :\n", models)
+    print("\nDNF BICA (", time.time() - start, "s) :\n", len(models), models)
     start = time.time()
     subsumptions = calculate_subsumptions(models)
     print("\nSUBSUMPTIONS: (", time.time() - start, "s) :\n")
     print_subsumptions(subsumptions)
     start = time.time()
     post_processing_models = post_processing_bica_models(models, subsumptions)
+    env_vars = get_X(post_processing_models)
     print("\nPOSTPROCESSING DNF (", time.time() - start, "s) :\n", print_separated_formula(post_processing_models))
     TNF(post_processing_models, env_vars, subsumptions)
+
+def get_X(separated_formulas):
+    X = set()
+    for separated_formula in separated_formulas:
+        for l in separated_formula[0]:
+            if utils.is_var_env(l):
+                if l[0] == "-":
+                    X.add(l[1:])
+                else:
+                    X.add(l)
+    return X
+
 
 def print_subsumptions(s):
     for key in s.keys():

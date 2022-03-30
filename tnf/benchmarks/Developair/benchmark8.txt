@@ -1,0 +1,68 @@
+(p8_e -> ~(controllable_variables_sys_3))
+(p9_e -> (controllable_variables_sys_3 & controllable_p18))
+(p10_e -> (controllable_variables_sys_3 & controllable_p19))
+(p11_e -> (controllable_variables_sys_3 & controllable_p20))
+((p7_e & p5_e) -> ~(controllable_variables_sys_3))
+(((p7_e & p15_e) & p4_e) -> (controllable_variables_sys_3 & controllable_p18))
+(((p7_e & p14_e) & p3_e) -> (controllable_variables_sys_3 & controllable_p19))
+((p7_e & p12_e) -> (controllable_variables_sys_3 & controllable_p20))
+((~((controllable_p18 | (controllable_p19 | controllable_p20))) & X (((controllable_p18 | controllable_p19) | controllable_p20))) -> (G [2, 101] controllable_variables_sys_0))
+((~(controllable_variables_sys_0) & (G [1, 100] controllable_variables_sys_0)) -> (G [101, 200] ~(controllable_variables_sys_0)))
+((~((controllable_p18 & ~(controllable_variables_sys_0))) & (G [1, 100] (controllable_p18 & ~(controllable_variables_sys_0)))) -> (G [101, 300] ~(controllable_variables_sys_3)))
+((~((controllable_p19 & ~(controllable_variables_sys_0))) & (G [1, 100] (controllable_p19 & ~(controllable_variables_sys_0)))) -> (G [101, 500] ~(controllable_variables_sys_3)))
+((~((controllable_p20 & ~(controllable_variables_sys_0))) & (G [1, 100] (controllable_p20 & ~(controllable_variables_sys_0)))) -> (G [101, 200] ~(controllable_variables_sys_3)))
+((~(controllable_variables_sys_0) & X controllable_variables_sys_0) -> X X controllable_variables_sys_2)
+((~(~(controllable_variables_sys_0)) & X ~(controllable_variables_sys_0)) -> X X ~(controllable_variables_sys_2))
+controllable_p2
+controllable_p17
+controllable_p18 -> controllable_p2
+controllable_p18 -> controllable_p17
+~(controllable_p18 & controllable_p19)
+~(controllable_p18 & controllable_p20)
+controllable_p19 -> controllable_p2
+controllable_p19 -> controllable_p17
+~(controllable_p19 & controllable_p20)
+controllable_p20 -> controllable_p2
+controllable_p20 -> controllable_p17
+p1_e
+p6_e
+p0_e
+p13_e
+p3_e -> p0_e
+~(p3_e & p12_e)
+p4_e -> p0_e
+p4_e -> p3_e
+~(p4_e & p12_e)
+~(p4_e & p14_e)
+p5_e -> p0_e
+p5_e -> p3_e
+p5_e -> p4_e
+~(p5_e & p12_e)
+~(p5_e & p14_e)
+~(p5_e & p15_e)
+p7_e -> p1_e
+p7_e -> p6_e
+~(p7_e & p8_e)
+~(p7_e & p9_e)
+~(p7_e & p10_e)
+~(p7_e & p11_e)
+p8_e -> p1_e
+p8_e -> p6_e
+~(p8_e & p9_e)
+~(p8_e & p10_e)
+~(p8_e & p11_e)
+p9_e -> p1_e
+p9_e -> p6_e
+~(p9_e & p10_e)
+~(p9_e & p11_e)
+p10_e -> p1_e
+p10_e -> p6_e
+~(p10_e & p11_e)
+p11_e -> p1_e
+p11_e -> p6_e
+p12_e -> p13_e
+p12_e -> p14_e
+p12_e -> p15_e
+p14_e -> p13_e
+p14_e -> p15_e
+p15_e -> p13_e

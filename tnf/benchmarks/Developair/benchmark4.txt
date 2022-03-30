@@ -1,0 +1,35 @@
+~controllable_s1 & ~controllable_s2 & ~controllable_s3
+((~(controllable_s1 & ~controllable_s2 & ~controllable_s3) & X (controllable_s1 & ~controllable_s2 & ~controllable_s3)) -> X X controllable_variables_sys_1)
+((~((p10_e & ~controllable_s1 & controllable_s2 & ~controllable_s3)) & X ((p10_e & ~controllable_s1 & controllable_s2 & ~controllable_s3))) -> X (X (~controllable_s1 & controllable_s2 & controllable_s3)))
+((~(p12_e) & X p12_e) -> X (X (controllable_s1 & ~controllable_s2 & controllable_s3)))
+((~((p11_e & (p16_e & (p17_e & ~controllable_s1 & ~controllable_s2 & ~controllable_s3)))) & X ((p11_e & (p16_e & (p17_e & ~controllable_s1 & ~controllable_s2 & ~controllable_s3))))) -> X (X (~controllable_s1 & ~controllable_s2 & controllable_s3)))
+((~(((p15_e & ~controllable_s1 & ~controllable_s2 & controllable_s3) & p0)) & X ((p15_e & (~controllable_s1 & ~controllable_s2 & controllable_s3 & p0)))) -> X (X (~controllable_s1 & controllable_s2 & ~controllable_s3)))
+((~((p16_e & ~controllable_s1 & controllable_s2 & controllable_s3)) & X ((p16_e & ~controllable_s1 & controllable_s2 & controllable_s3))) -> X (X (controllable_s1 & ~controllable_s2 & ~controllable_s3)))
+((~((p7_e & ~controllable_s1 & ~controllable_s2 & ~controllable_s3)) & X ((p7_e & ~controllable_s1 & ~controllable_s2 & ~controllable_s3))) -> X (X (~controllable_s1 & controllable_s2 & ~controllable_s3)))
+~(controllable_s1 & controllable_s2 & ~controllable_s3)
+~(controllable_s1 & controllable_s2 & controllable_s3)
+controllable_p1
+controllable_p8
+p2_e
+p9_e
+p3_e
+p13_e
+p4_e
+p14_e
+p5_e
+p18_e
+p6_e
+p19_e
+p7_e -> p5_e
+~(p7_e & p17_e)
+p10_e -> p2_e
+p10_e -> p9_e
+~(p10_e & p11_e)
+p11_e -> p2_e
+p11_e -> p9_e
+p15_e -> p4_e
+p15_e -> p14_e
+~(p15_e & p16_e)
+p16_e -> p4_e
+p16_e -> p14_e
+p17_e -> p18_e

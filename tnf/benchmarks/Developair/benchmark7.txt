@@ -1,0 +1,178 @@
+~controllable_s1 & ~controllable_s2
+((~(p8_e) & X p8_e) -> (F [2, 11] controllable_p74))
+((~(p38_e) & X p38_e) -> (F [2, 11] controllable_p73))
+((~((controllable_p74 & p28_e)) & X ((controllable_p74 & p28_e))) -> (F [2, 11] controllable_p95))
+((~((controllable_p73 & p31_e)) & X ((controllable_p73 & p31_e))) -> (F [2, 11] controllable_p94))
+((~(((controllable_p74 & p30_e) | (controllable_p73 & p34_e))) & X (((controllable_p74 & p30_e) | (controllable_p73 & p34_e)))) -> (F [2, 11] controllable_p93))
+((~(((variables_env_24 & (p19 & variables_env_30)) & (variables_env_23 & controllable_p41))) & X ((((variables_env_24 & p19) & variables_env_30) & (variables_env_23 & controllable_p41)))) -> (F [2, 11] controllable_p59))
+((~((((~(variables_env_24) | p1_e) | (~(variables_env_30) | ~(variables_env_23))) | controllable_p41)) & X ((((~(variables_env_24) | p1_e) | ~(variables_env_30)) | (~(variables_env_23) | controllable_p41)))) -> (F [2, 11] controllable_p58))
+((~(controllable_p16) & X controllable_p16) -> (F [2, 11] controllable_variables_sys_18))
+((~(controllable_p2) & X controllable_p2) -> (F [2, 11] ~(controllable_variables_sys_18)))
+((~((~(~controllable_s1 & ~controllable_s2) & controllable_p42)) & X ((~(~controllable_s1 & ~controllable_s2) & controllable_p42))) -> (F [2, 11] ~controllable_s1 & ~controllable_s2))
+((~(((~controllable_s1 & ~controllable_s2 & controllable_p32) & controllable_p43)) & X (((~controllable_s1 & ~controllable_s2 & controllable_p32) & controllable_p43))) -> (F [2, 11] ~controllable_s1 & controllable_s2))
+((~(((~controllable_s1 & ~controllable_s2 & ~(variables_env_25)) & (controllable_p83 & controllable_p43))) & X ((~controllable_s1 & ~controllable_s2 & ((~(variables_env_25) & controllable_p83) & controllable_p43)))) -> (F [2, 11] controllable_s1 & ~controllable_s2))
+((~(((~controllable_s1 & controllable_s2 & controllable_p86) & controllable_p43)) & X (((~controllable_s1 & controllable_s2 & controllable_p86) & controllable_p43))) -> (F [2, 11] controllable_s1 & ~controllable_s2))
+((~(((controllable_s1 & ~controllable_s2 & controllable_p32) & controllable_p43)) & X (((controllable_s1 & ~controllable_s2 & controllable_p32) & controllable_p43))) -> (F [2, 11] ~controllable_s1 & controllable_s2))
+((~(((controllable_s1 & ~controllable_s2 & controllable_p82) & controllable_p43)) & X (((controllable_s1 & ~controllable_s2 & controllable_p82) & controllable_p43))) -> (F [2, 11] controllable_s1 & controllable_s2))
+((~(((controllable_s1 & controllable_s2 & controllable_p32) & controllable_p43)) & X (((controllable_s1 & controllable_s2 & controllable_p32) & controllable_p43))) -> (F [2, 11] ~controllable_s1 & controllable_s2))
+((~((controllable_s1 & controllable_s2 & (controllable_p56 & (controllable_p83 & controllable_p43)))) & X ((controllable_s1 & controllable_s2 & (controllable_p56 & (controllable_p83 & controllable_p43))))) -> (F [2, 11] ~controllable_s1 & ~controllable_s2))
+((~((controllable_p41 & (variables_env_23 & (variables_env_26 & (p17_e | variables_env_25))))) & X (((controllable_p41 & variables_env_23) & (variables_env_26 & (p17_e | variables_env_25))))) -> (F [2, 11] controllable_p43))
+((~(((controllable_p40 | ~(variables_env_23)) | (~(variables_env_30) | ((~(variables_env_26) | p26_e) & ~(variables_env_25))))) & X ((controllable_p40 | (~(variables_env_23) | (~(variables_env_30) | ((~(variables_env_26) | p26_e) & ~(variables_env_25))))))) -> (F [2, 11] controllable_p42))
+((~(variables_env_25) & X variables_env_25) -> (F [2, 11] controllable_p85))
+((~(~(variables_env_25)) & X ~(variables_env_25)) -> (F [2, 11] controllable_p84))
+((~(variables_env_25) & X variables_env_25) -> (F [2, 11] controllable_p88))
+((~(~(variables_env_25)) & X ~(variables_env_25)) -> (F [2, 11] controllable_p87))
+((~((~controllable_s1 & ~controllable_s2 & ~(variables_env_25))) & X ((~controllable_s1 & ~controllable_s2 & ~(variables_env_25)))) -> (F [2, 11] controllable_p66))
+((~(((~controllable_s1 & ~controllable_s2 & variables_env_25) & (controllable_p6 & controllable_p43))) & X ((((~controllable_s1 & ~controllable_s2 & variables_env_25) & controllable_p6) & controllable_p43))) -> (F [2, 11] controllable_p66))
+((~(((~controllable_s1 & ~controllable_s2 & variables_env_25) & (controllable_p47 & controllable_p43))) & X ((((~controllable_s1 & ~controllable_s2 & variables_env_25) & controllable_p47) & controllable_p43))) -> (F [2, 11] controllable_p66))
+((~(((~controllable_s1 & ~controllable_s2 & (variables_env_25 & controllable_p57)) & controllable_p43)) & X (((~controllable_s1 & ~controllable_s2 & variables_env_25) & (controllable_p57 & controllable_p43)))) -> (F [2, 11] controllable_p65))
+((~(~controllable_s1 & controllable_s2) & X (~controllable_s1 & controllable_s2)) -> (F [2, 11] (controllable_p97 & controllable_p89)))
+((~((~controllable_s1 & controllable_s2 & variables_env_25)) & X ((~controllable_s1 & controllable_s2 & variables_env_25))) -> (F [2, 11] controllable_p90))
+((~((~controllable_s1 & controllable_s2 & variables_env_25)) & X ((~controllable_s1 & controllable_s2 & variables_env_25))) -> (F [2, 11] controllable_p91))
+((~((~controllable_s1 & controllable_s2 & (((controllable_p6 & controllable_p49) & p20_e) | (controllable_p47 & (controllable_p18 & p5_e))))) & X ((~controllable_s1 & controllable_s2 & ((controllable_p6 & (controllable_p49 & p20_e)) | (controllable_p47 & (controllable_p18 & p5_e)))))) -> (F [2, 11] controllable_p44))
+((~((~controllable_s1 & controllable_s2 & ~(((controllable_p6 & (controllable_p49 & p20_e)) | (controllable_p47 & (controllable_p18 & p5_e)))))) & X ((~controllable_s1 & controllable_s2 & ~((((controllable_p6 & controllable_p49) & p20_e) | ((controllable_p47 & controllable_p18) & p5_e)))))) -> (F [2, 11] controllable_p92))
+((~((~controllable_s1 & controllable_s2 & controllable_p46)) & X ((~controllable_s1 & controllable_s2 & controllable_p46))) -> (F [2, 11] (controllable_p96 & controllable_p78)))
+((~((controllable_s1 & ~controllable_s2 & p7_e)) & X ((controllable_s1 & ~controllable_s2 & p7_e))) -> (F [2, 11] controllable_p72))
+((~((controllable_s1 & ~controllable_s2 & p20_e)) & X ((controllable_s1 & ~controllable_s2 & p20_e))) -> (F [2, 11] controllable_p72))
+((~(((controllable_s1 & ~controllable_s2 & ~(variables_env_25)) & controllable_p43)) & X (((controllable_s1 & ~controllable_s2 & ~(variables_env_25)) & controllable_p43))) -> (F [2, 11] controllable_p67))
+((~(((controllable_s1 & ~controllable_s2 & variables_env_25) & controllable_p43)) & X ((controllable_s1 & ~controllable_s2 & (variables_env_25 & controllable_p43)))) -> (F [2, 11] controllable_p65))
+((~(((controllable_s1 & controllable_s2 & (~(variables_env_25) & controllable_p71)) & controllable_p43)) & X (((controllable_s1 & controllable_s2 & ~(variables_env_25)) & (controllable_p71 & controllable_p43)))) -> (F [2, 11] controllable_p67))
+((~(((controllable_s1 & controllable_s2 & (~(variables_env_25) & controllable_p52)) & controllable_p43)) & X (((controllable_s1 & controllable_s2 & ~(variables_env_25)) & (controllable_p52 & controllable_p43)))) -> (F [2, 11] controllable_p67))
+((~(((controllable_s1 & controllable_s2 & ~(variables_env_25)) & (controllable_p60 & controllable_p43))) & X ((((controllable_s1 & controllable_s2 & ~(variables_env_25)) & controllable_p60) & controllable_p43))) -> (F [2, 11] controllable_p67))
+((~((controllable_s1 & controllable_s2 & variables_env_25)) & X ((controllable_s1 & controllable_s2 & variables_env_25))) -> (F [2, 11] controllable_p65))
+((~((controllable_p43 & variables_env_25)) & X ((controllable_p43 & variables_env_25))) -> (F [2, 11] controllable_p70))
+((~(((controllable_p43 & ~(variables_env_25)) & (controllable_p74 & (controllable_p9 & controllable_p50)))) & X ((controllable_p43 & (~(variables_env_25) & (controllable_p74 & (controllable_p9 & controllable_p50)))))) -> (F [2, 11] controllable_p69))
+((~(((controllable_p43 & (~(variables_env_25) & (controllable_p74 & controllable_p9))) & controllable_p64)) & X ((controllable_p43 & (((~(variables_env_25) & controllable_p74) & controllable_p9) & controllable_p64)))) -> (F [2, 11] controllable_p70))
+((~((controllable_p43 & ((~(variables_env_25) & controllable_p74) & (controllable_p47 & controllable_p63)))) & X ((((controllable_p43 & ~(variables_env_25)) & (controllable_p74 & controllable_p47)) & controllable_p63))) -> (F [2, 11] controllable_p69))
+((~(((controllable_p43 & ~(variables_env_25)) & (controllable_p74 & (controllable_p47 & controllable_p54)))) & X ((controllable_p43 & (~(variables_env_25) & (controllable_p74 & (controllable_p47 & controllable_p54)))))) -> (F [2, 11] controllable_p70))
+((~((controllable_p43 & (~(variables_env_25) & (controllable_p73 & (controllable_p48 & controllable_p51))))) & X ((((controllable_p43 & ~(variables_env_25)) & (controllable_p73 & controllable_p48)) & controllable_p51))) -> (F [2, 11] controllable_p69))
+((~((((controllable_p43 & ~(variables_env_25)) & (controllable_p73 & controllable_p48)) & controllable_p62)) & X ((((controllable_p43 & ~(variables_env_25)) & controllable_p73) & (controllable_p48 & controllable_p62)))) -> (F [2, 11] controllable_p70))
+((~((controllable_p43 & (~(variables_env_25) & (controllable_p73 & (controllable_p10 & controllable_p61))))) & X ((((controllable_p43 & ~(variables_env_25)) & (controllable_p73 & controllable_p10)) & controllable_p61))) -> (F [2, 11] controllable_p69))
+((~((((controllable_p43 & ~(variables_env_25)) & (controllable_p73 & controllable_p10)) & controllable_p55)) & X ((((controllable_p43 & ~(variables_env_25)) & controllable_p73) & (controllable_p10 & controllable_p55)))) -> (F [2, 11] controllable_p70))
+((~(controllable_p42) & X controllable_p42) -> (F [2, 11] controllable_p69))
+((~((((controllable_p43 & ~(variables_env_25)) & controllable_p73) & controllable_p69)) & X (((controllable_p43 & ~(variables_env_25)) & (controllable_p73 & controllable_p69)))) -> (F [2, 11] controllable_p46))
+((~((controllable_p42 | (variables_env_25 | (controllable_p74 | controllable_p68)))) & X (((controllable_p42 | (variables_env_25 | controllable_p74)) | controllable_p68))) -> (F [2, 11] controllable_p45))
+((~((controllable_p43 & (variables_env_25 & controllable_p74))) & X ((controllable_p43 & (variables_env_25 & controllable_p74)))) -> (F [2, 11] controllable_p81))
+((~((controllable_p42 | (variables_env_25 & controllable_p73))) & X ((controllable_p42 | (variables_env_25 & controllable_p73)))) -> (F [2, 11] controllable_variables_sys_21))
+((~((controllable_p43 & (variables_env_25 & controllable_p73))) & X ((controllable_p43 & (variables_env_25 & controllable_p73)))) -> (F [2, 11] controllable_p77))
+((~((controllable_p42 | (variables_env_25 & controllable_p74))) & X ((controllable_p42 | (variables_env_25 & controllable_p74)))) -> (F [2, 11] controllable_p76))
+((~(controllable_p0) & X controllable_p0) -> (F [2, 11] controllable_variables_sys_20))
+((~(controllable_p53) & X controllable_p53) -> (F [2, 11] ~(controllable_variables_sys_20)))
+~(controllable_p0 & controllable_p53)
+~(controllable_p0 & controllable_p56)
+controllable_p0 -> controllable_p68
+~(controllable_p0 & controllable_p69)
+~(controllable_p2 & controllable_p16)
+controllable_p6 -> controllable_p9
+controllable_p6 -> controllable_p10
+~(controllable_p6 & controllable_p47)
+~(controllable_p6 & controllable_p48)
+~(controllable_p6 & controllable_p57)
+~(controllable_p9 & controllable_p47)
+~(controllable_p9 & controllable_p48)
+controllable_p10 -> controllable_p6
+controllable_p10 -> controllable_p9
+~(controllable_p10 & controllable_p47)
+~(controllable_p10 & controllable_p48)
+~(controllable_p10 & controllable_p57)
+~(controllable_p16 & controllable_p58)
+controllable_p18 -> controllable_p6
+controllable_p18 -> controllable_p9
+controllable_p18 -> controllable_p10
+~(controllable_p18 & controllable_p47)
+~(controllable_p18 & controllable_p48)
+~(controllable_p18 & controllable_p49)
+~(controllable_p18 & controllable_p57)
+~(controllable_p32 & controllable_p82)
+~(controllable_p32 & controllable_p83)
+~(controllable_p40 & controllable_p41)
+~(controllable_p42 & controllable_p43)
+~(controllable_p45 & controllable_p46)
+controllable_p47 -> controllable_p48
+controllable_p47 -> controllable_p49
+~(controllable_p47 & controllable_p57)
+controllable_p48 -> controllable_p47
+controllable_p48 -> controllable_p49
+~(controllable_p48 & controllable_p57)
+controllable_p50 -> controllable_p51
+controllable_p50 -> controllable_p54
+controllable_p50 -> controllable_p55
+~(controllable_p50 & controllable_p61)
+~(controllable_p50 & controllable_p62)
+~(controllable_p50 & controllable_p63)
+~(controllable_p50 & controllable_p64)
+~(controllable_p50 & controllable_p66)
+controllable_p51 -> controllable_p50
+controllable_p51 -> controllable_p54
+controllable_p51 -> controllable_p55
+~(controllable_p51 & controllable_p61)
+~(controllable_p51 & controllable_p62)
+~(controllable_p51 & controllable_p63)
+~(controllable_p51 & controllable_p64)
+~(controllable_p51 & controllable_p66)
+~(controllable_p52 & controllable_p60)
+~(controllable_p52 & controllable_p71)
+controllable_p54 -> controllable_p55
+~(controllable_p54 & controllable_p61)
+~(controllable_p54 & controllable_p63)
+controllable_p55 -> controllable_p54
+~(controllable_p55 & controllable_p61)
+~(controllable_p55 & controllable_p63)
+controllable_p56 -> controllable_p53
+controllable_p57 -> controllable_p9
+controllable_p57 -> controllable_p49
+controllable_p58 -> controllable_p2
+~(controllable_p60 & controllable_p71)
+controllable_p61 -> controllable_p62
+controllable_p61 -> controllable_p63
+controllable_p61 -> controllable_p64
+~(controllable_p61 & controllable_p66)
+controllable_p62 -> controllable_p64
+controllable_p63 -> controllable_p61
+controllable_p63 -> controllable_p62
+controllable_p63 -> controllable_p64
+~(controllable_p63 & controllable_p66)
+controllable_p64 -> controllable_p62
+controllable_p66 -> controllable_p54
+controllable_p66 -> controllable_p55
+controllable_p66 -> controllable_p62
+controllable_p66 -> controllable_p64
+~(controllable_p68 & controllable_p69)
+controllable_p69 -> controllable_p53
+controllable_p69 -> controllable_p56
+~(controllable_p73 & controllable_p74)
+controllable_p82 -> controllable_p83
+~(controllable_p90 & controllable_p91)
+~(controllable_p90 & controllable_p92)
+~(controllable_p91 & controllable_p92)
+p3_e
+p21_e
+p11_e
+p27_e
+p12_e
+p29_e
+p13_e
+p33_e
+p14_e
+p36_e
+p15_e
+p37_e
+p4_e
+p39_e
+~(p1_e & p19)
+p5_e -> p3_e
+p5_e -> p7_e
+~(p5_e & p20_e)
+p7_e -> p3_e
+~(p7_e & p20_e)
+~(p8_e & p38_e)
+p17_e -> p11_e
+~(p17_e & p26_e)
+p20_e -> p21_e
+p26_e -> p27_e
+~(p28_e & p30_e)
+p30_e -> p12_e
+p30_e -> p29_e
+~(p31_e & p34_e)
+p34_e -> p13_e
+p34_e -> p33_e
