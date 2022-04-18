@@ -2,7 +2,7 @@ from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 import sys
 from utils import utils
-        
+
 class TemporalFormula(NodeVisitor):
 
     """
@@ -10,10 +10,12 @@ class TemporalFormula(NodeVisitor):
         We represent the temporal fomula as a binary tree
     """
 
-    def __init__ (self, str):
+    def __init__ (self, str, changeNegAlwaysEventually = True):
+        sys.setrecursionlimit(100000)
+        self.changeNegAlwaysEventually = changeNegAlwaysEventually
         self.devStr = str.replace("\t","").replace(" ", "").replace("\n","")
         self.ast = self.__parse_formula(self.devStr) #Formula as an ast tree
-        self.nnf = self.__push_negs(self.visit(self.ast)) #Push negs 
+        self.nnf = self.__push_negs(self.visit(self.ast)) #Push negs
         self.ab = self.__push_nexts(self.nnf) #Push Nexts
         self.now_e = self.__now_e(self.ab) #Get now_e
         self.str = utils.to_str(self.ab)
@@ -89,10 +91,18 @@ class TemporalFormula(NodeVisitor):
             return ['X', subformulaNeg]
         elif utils.is_eventually(formula[0]):
             subformulaNeg = self.neg(formula[1])
-            return [utils.F_to_G(formula[0]), subformulaNeg]
+            if self.changeNegAlwaysEventually:
+                return [utils.F_to_G(formula[0]), subformulaNeg]
+            else:
+                return ["-", formula]
+
         elif utils.is_always(formula[0]):
             subformulaNeg = self.neg(formula[1])
-            return [utils.G_to_F(formula[0]), subformulaNeg]
+            if self.changeNegAlwaysEventually:
+                return [utils.G_to_F(formula[0]), subformulaNeg]
+            else:
+                return ["-", formula]
+
         else:
             return ["-", formula]
 
@@ -135,7 +145,7 @@ class TemporalFormula(NodeVisitor):
 
     def __push_negs(self, formula):
         if utils.is_neg(formula[0]):
-            if isinstance(formula[1], str):
+            if isinstance(formula[1], str) or (not self.changeNegAlwaysEventually and  utils.is_eventually(formula[1][0])) or (not self.changeNegAlwaysEventually and  utils.is_always(formula[1][0])):
                 return formula
             formulaNeg = self.neg(formula[1])
             return self.__push_negs(formulaNeg)

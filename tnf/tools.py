@@ -31,7 +31,13 @@ def ander_to_str(formula):
     else:
         leftFormula = ander_to_str(formula[1])
         rightFormula = ander_to_str(formula[2])
-        return "(" + leftFormula + ")" + formula[0] + "(" + rightFormula + ")"
+        res = "(" + leftFormula + ")" + formula[0] + "(" + rightFormula + ")"
+        if len(formula) > 3:
+            for f in formula[3:]:
+                extra_formula =  ander_to_str(f)
+                res = res + formula[0] + "(" + extra_formula + ")"
+
+        return res
 
 
 def execute_command(command):

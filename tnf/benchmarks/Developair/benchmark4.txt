@@ -1,4 +1,3 @@
-~controllable_s1 & ~controllable_s2 & ~controllable_s3
 ((~(controllable_s1 & ~controllable_s2 & ~controllable_s3) & X (controllable_s1 & ~controllable_s2 & ~controllable_s3)) -> X X controllable_variables_sys_1)
 ((~((p10_e & ~controllable_s1 & controllable_s2 & ~controllable_s3)) & X ((p10_e & ~controllable_s1 & controllable_s2 & ~controllable_s3))) -> X (X (~controllable_s1 & controllable_s2 & controllable_s3)))
 ((~(p12_e) & X p12_e) -> X (X (controllable_s1 & ~controllable_s2 & controllable_s3)))
